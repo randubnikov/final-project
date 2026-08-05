@@ -19,7 +19,7 @@ async function loadData() {
       </tr>
     `).join('');
 
-    document.getElementById('incidents-body').innerHTML = incidents.map(i => `
+    document.getElementById('incidents-body').innerHTML = incidents.filter(i => i.status === 'DOWN').map(i => `
       <tr>
         <td class="name-cell">${esc(i.name)}</td>
         <td><span class="badge ${esc(i.status.toLowerCase())}">${esc(i.status)}</span></td>
@@ -34,7 +34,7 @@ async function loadData() {
     const down = Object.values(latestStatus).filter(s => s === 'DOWN').length;
 
     document.getElementById('total-services').textContent  = services.length;
-    document.getElementById('total-incidents').textContent = incidents.length;
+    document.getElementById('total-incidents').textContent = incidents.filter(i => i.status === 'DOWN').length;
     document.getElementById('down-count').textContent      = down;
     document.getElementById('healthy-count').textContent   = services.length - down;
   } catch (err) {
